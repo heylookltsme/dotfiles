@@ -76,6 +76,20 @@
 		fi \
 	}; f"
 
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %ad%Cred%d\\ %Creset%s%Cblue\\ %C(green)[%cn]" --decorate --date=relative
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ %C(green)[%cn]" --decorate --numstat
+	ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ %C(green)[%cn]" --decorate --date=default
+	cp = cherry-pick
+	st = status -s
+	co = checkout
+	diff = diff --word-diff
+	dc = diff --cached
+	bls = branch -v
+	rdel = push origin --delete
+	del = branch -d
+	cob = checkout -b
+	diff = diff --color
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
