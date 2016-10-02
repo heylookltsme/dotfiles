@@ -233,35 +233,6 @@ highlight User1
     \ cterm=NONE  ctermbg=237    ctermfg=Grey
     \ gui=NONE    guibg=#073642  guifg=#839496
 
-" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-"set statusline=
-"set statusline+=%1*            " User1 highlight
-"set statusline+=\ [%n]         " Buffer number
-"set statusline+=\ %{GetGitBranchName()}        " Git branch name
-"set statusline+=\ [%f]         " File path
-"set statusline+=%m             " Modified flag
-"set statusline+=%r             " Readonly flag
-"set statusline+=%h             " Help file flag
-"set statusline+=%w             " Preview window flag
-"set statusline+=%y             " File type
-"set statusline+=[
-"set statusline+=%{&ff}         " File format
-"set statusline+=:
-"set statusline+=%{strlen(&fenc)?&fenc:'none'}  " File encoding
-"set statusline+=]
-"set statusline+=%=             " Left/Right separator
-"set statusline+=%c             " File encoding
-"set statusline+=,
-"set statusline+=%l             " Current line number
-"set statusline+=/
-"set statusline+=%L             " Total number of lines
-"set statusline+=\ (%P)\        " Percent through file
-
-" Example result:
-"
-"  [1] [master] [vim/vimrc][vim][unix:utf-8]            17,238/381 (59%)
-"
 
 " ----------------------------------------------------------------------
 " | Plugins                                                             |
@@ -296,16 +267,3 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
