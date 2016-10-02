@@ -2,6 +2,10 @@
 call plug#begin()
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 " Colorz
@@ -46,7 +50,7 @@ set noeol
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if exists("&undodir")
-	set undodir=~/.vim/undo
+    set undodir=~/.vim/undo
 endif
 
 " Don’t create backups when editing files in certain directories
@@ -132,8 +136,8 @@ set showcmd
 
 " Use relative line numbers
 if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
+    set relativenumber
+    au BufReadPost * set relativenumber
 endif
 
 " Start scrolling three lines before the horizontal window border
@@ -158,6 +162,7 @@ function! StripWhitespace()
     call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
+
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
@@ -166,12 +171,12 @@ autocmd BufWritePre *.php,*.js,*.scss,*.css,*.tpl,*.html :%s/\s\+$//e
 
 " Automatic commands
 if has("autocmd")
-	" Enable file type detection
-	filetype plugin indent on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+    " Enable file type detection
+    filetype plugin indent on
+    " Treat .json files as .js
+    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    " Treat .md files as Markdown
+    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
 " Better comment color
@@ -230,28 +235,28 @@ highlight User1
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-set statusline=
-set statusline+=%1*            " User1 highlight
-set statusline+=\ [%n]         " Buffer number
-set statusline+=\ %{GetGitBranchName()}        " Git branch name
-set statusline+=\ [%f]         " File path
-set statusline+=%m             " Modified flag
-set statusline+=%r             " Readonly flag
-set statusline+=%h             " Help file flag
-set statusline+=%w             " Preview window flag
-set statusline+=%y             " File type
-set statusline+=[
-set statusline+=%{&ff}         " File format
-set statusline+=:
-set statusline+=%{strlen(&fenc)?&fenc:'none'}  " File encoding
-set statusline+=]
-set statusline+=%=             " Left/Right separator
-set statusline+=%c             " File encoding
-set statusline+=,
-set statusline+=%l             " Current line number
-set statusline+=/
-set statusline+=%L             " Total number of lines
-set statusline+=\ (%P)\        " Percent through file
+"set statusline=
+"set statusline+=%1*            " User1 highlight
+"set statusline+=\ [%n]         " Buffer number
+"set statusline+=\ %{GetGitBranchName()}        " Git branch name
+"set statusline+=\ [%f]         " File path
+"set statusline+=%m             " Modified flag
+"set statusline+=%r             " Readonly flag
+"set statusline+=%h             " Help file flag
+"set statusline+=%w             " Preview window flag
+"set statusline+=%y             " File type
+"set statusline+=[
+"set statusline+=%{&ff}         " File format
+"set statusline+=:
+"set statusline+=%{strlen(&fenc)?&fenc:'none'}  " File encoding
+"set statusline+=]
+"set statusline+=%=             " Left/Right separator
+"set statusline+=%c             " File encoding
+"set statusline+=,
+"set statusline+=%l             " Current line number
+"set statusline+=/
+"set statusline+=%L             " Total number of lines
+"set statusline+=\ (%P)\        " Percent through file
 
 " Example result:
 "
@@ -283,3 +288,24 @@ highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
+
+" Airline
+let g:airline_theme='bubblegum'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
