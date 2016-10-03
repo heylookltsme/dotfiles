@@ -6,7 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'valloric/youcompleteme'
+" Plug 'valloric/youcompleteme'
 call plug#end()
 
 " Colorz
@@ -87,7 +87,7 @@ set shiftwidth=4  " Number of spaces when indenting
 set softtabstop=4 " Don't think I need this in combo with the other options
 
 " Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set lcs=tab:▸\ ,trail:·,nbsp:_
 set list
 
 " Highlight searches
