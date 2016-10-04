@@ -9,6 +9,7 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'valloric/youcompleteme'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 " Colorz
