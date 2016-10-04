@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 " Plug 'valloric/youcompleteme'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'luochen1990/rainbow'
 call plug#end()
 
 " Colorz
@@ -43,10 +44,6 @@ set history=5000
 
 " Change mapleader
 let mapleader=","
-
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
 
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
@@ -284,3 +281,8 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=233 " #121212
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
+
+"
+" Rainbow 
+"
+let g:rainbow_active = 1
