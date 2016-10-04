@@ -1,6 +1,7 @@
 " Plug ins, managed by vim-plug
 call plug#begin()
 Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -10,6 +11,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'
+Plug 'pangloss/vim-javascript'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
 call plug#end()
 
 " Colorz
@@ -239,6 +243,19 @@ highlight User1
 " ----------------------------------------------------------------------
 
 "
+" NERDTree
+"
+autocmd VimEnter * NERDTree    " Open nerdtree on startup 
+autocmd VimEnter * wincmd p    " Have cursor start in file window
+map <C-n> :NERDTreeToggle<CR>  " Map toggle to crtl-n
+let NERDTreeShowHidden=1       " Show hidden files
+" Better color for directories
+autocmd VimEnter,ColorScheme * :hi Directory guifg=#FF0000 ctermfg=red
+" Close vim if nerdtree is the only window open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+"
 " Syntastic
 "
 set statusline+=%#warningmsg#
@@ -287,3 +304,8 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
 " Rainbow 
 "
 let g:rainbow_active = 1
+
+"
+" vim-javascript
+"
+let g:javascript_plugin_jsdoc = 1
