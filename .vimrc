@@ -103,6 +103,9 @@ set ignorecase
 " Highlight dynamically as pattern is typed
 set incsearch
 
+" Clear previous search highlighting by hitting enter
+nnoremap <CR> :noh<CR><CR>
+
 " Always show status line
 set laststatus=2
 
@@ -186,6 +189,9 @@ endif
 
 " Better comment color
 highlight Comment ctermfg=Gray
+
+# Better search highlighting
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
 
  " ----------------------------------------------------------------------
 " | Helper Functions                                                   |
