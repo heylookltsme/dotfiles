@@ -103,6 +103,9 @@ set ignorecase
 " Highlight dynamically as pattern is typed
 set incsearch
 
+" Clear previous search highlighting by hitting enter
+nnoremap <CR> :noh<CR><CR>
+
 " Always show status line
 set laststatus=2
 
@@ -187,6 +190,9 @@ endif
 " Better comment color
 highlight Comment ctermfg=Gray
 
+# Better search highlighting
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
+
  " ----------------------------------------------------------------------
 " | Helper Functions                                                   |
 " ----------------------------------------------------------------------
@@ -246,7 +252,7 @@ highlight User1
 "
 " NERDTree
 "
-autocmd VimEnter * NERDTree    " Open nerdtree on startup 
+autocmd VimEnter * NERDTree    " Open nerdtree on startup
 autocmd VimEnter * wincmd p    " Have cursor start in file window
 map <C-n> :NERDTreeToggle<CR>  " Map toggle to crtl-n
 let NERDTreeShowHidden=1       " Show hidden files
@@ -302,7 +308,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=233 " #121212
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
 
 "
-" Rainbow 
+" Rainbow
 "
 let g:rainbow_active = 1
 
