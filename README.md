@@ -1,8 +1,11 @@
-testing
 ## Mah dotfiles. (WIP)
 
 Forked from [https://github.com/mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles). 
 Borrowing heavily from [alrra's dotfiles](https://github.com/alrra/dotfiles) for vim stuff.
+
+### Manual Parts
+- Install the patched font and update iterm2 preferences
+- make sure permissions for .viminfo are correct
 
 ## Thanks to… (perserved from original repo)
 
