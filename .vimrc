@@ -190,7 +190,7 @@ endif
 " Better comment color
 highlight Comment ctermfg=Gray
 
-# Better search highlighting
+" Better search highlighting
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
 
  " ----------------------------------------------------------------------
