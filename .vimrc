@@ -16,6 +16,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mtscout6/syntastic-local-eslint.vim'
+Plug 'heavenshell/vim-jsdoc'
 call plug#end()
 
 " Colorz
@@ -52,9 +53,9 @@ set history=5000
 " Change mapleader
 let mapleader=","
 
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
+" Fuck .swps
+set nobackup
+set noswapfile
 if exists("&undodir")
     set undodir=~/.vim/undo
 endif
@@ -288,6 +289,9 @@ highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 
+hi SpellBad ctermfg=black ctermbg=yellow
+hi SpellCap ctermfg=black ctermbg=yellow
+
 "
 " Airline
 "
@@ -297,6 +301,28 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline#extensions#hunks#enabled=0
+
+"
+" NERDCommenter
+"
+" Add spaces after comment delimiters
+let g:NERDSpaceDelims = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+"
+" JSDoc
+"
+let g:jsdoc_param_description_separator = ' - '
+let g:jsdoc_underscore_private = 1
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_tags = {} | let g:jsdoc_tags['object'] = 'Object'
+nmap <silent> <C-j> ?function<cr>:noh<cr><Plug>(jsdoc)
 
 "
 " Indent Guides
