@@ -17,6 +17,7 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mtscout6/syntastic-local-eslint.vim'
 Plug 'heavenshell/vim-jsdoc'
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 " Colorz
