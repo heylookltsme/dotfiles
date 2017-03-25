@@ -102,5 +102,11 @@ brew install vbindiff
 brew install webkit2png
 brew install zopfli
 
+# Dev-related
+brew install gpg
+brew install npm
+brew install nvm
+brew install editorconfig
+
 # Remove outdated versions from the cellar.
 brew cleanup
