@@ -5,6 +5,11 @@ cd "$(dirname "${BASH_SOURCE}")";
 git pull origin master;
 
 function doIt() {
+
+    # load libs
+    source ./lib/utils.sh
+    source ./lib/npm.sh
+
     rsync --exclude ".git/" \
         --exclude ".DS_Store" \
         --exclude ".osx" \
@@ -15,7 +20,10 @@ function doIt() {
 
     # Install vim plugins
     vim +PlugInstall +qall!
-    
+
+    # Install global node modules
+    run_npm
+
     source ~/.bash_profile;
 }
 
