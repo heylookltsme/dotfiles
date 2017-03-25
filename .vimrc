@@ -82,7 +82,7 @@ syntax on
 set cursorline
 
 " Highlight a certain column
-set colorcolumn=80
+set colorcolumn=100
 
 " Indents, Tabs/Spaces
 set autoindent    " If you're indented, new lines will also be indented
