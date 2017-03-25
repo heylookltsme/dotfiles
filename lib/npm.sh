@@ -11,7 +11,12 @@ run_npm() {
         # List of npm packages
         local packages="\
                 yarn \
+                nodemon \
                 eslint \
+                eslint-plugin-react \
+                eslint-plugin-jsx-a11y \
+                eslint-plugin-import \
+                eslint-config-airbnb \
                 jsdoc \
                 grunt \
                 gulp \
