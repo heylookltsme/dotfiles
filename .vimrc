@@ -256,7 +256,6 @@ highlight User1
 "
 " NERDTree
 "
-autocmd VimEnter * NERDTree    " Open nerdtree on startup
 autocmd VimEnter * wincmd p    " Have cursor start in file window
 map <C-n> :NERDTreeToggle<CR>  " Map toggle to crtl-n
 let NERDTreeShowHidden=1       " Show hidden files
@@ -264,7 +263,6 @@ let NERDTreeShowHidden=1       " Show hidden files
 autocmd VimEnter,ColorScheme * :hi Directory guifg=#FF0000 ctermfg=red
 " Close vim if nerdtree is the only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 
 "
 " Syntastic
