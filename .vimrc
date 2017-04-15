@@ -7,7 +7,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-" Plug 'valloric/youcompleteme'
+Plug 'valloric/youcompleteme'
+Plug 'ternjs/tern_for_vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'
@@ -146,10 +147,10 @@ set title
 set showcmd
 
 " Use relative line numbers
-if exists("&relativenumber")
-    set relativenumber
-    au BufReadPost * set relativenumber
-endif
+" if exists("&relativenumber")
+"     set relativenumber
+"     au BufReadPost * set relativenumber
+" endif
 
 " Start scrolling three lines before the horizontal window border
 set scrolloff=5
@@ -343,3 +344,23 @@ let g:rainbow_active = 1
 " vim-javascript
 "
 let g:javascript_plugin_jsdoc = 1
+
+"
+" CtrlP
+"
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|node_modules$'
+
+"
+" Tern
+"
+"enable keyboard shortcuts
+let g:tern_map_keys=1
+"show argument hints
+" let g:tern_show_argument_hints='on_hold'
+
+"
+" YouCompleteMe
+"
+let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_min_num_of_chars_for_completion = 1
