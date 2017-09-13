@@ -1,6 +1,6 @@
 " Plug ins, managed by vim-plug
 call plug#begin()
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
@@ -8,9 +8,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'valloric/youcompleteme'
-Plug 'ternjs/tern_for_vim'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'
 Plug 'pangloss/vim-javascript'
 Plug 'hail2u/vim-css3-syntax'
@@ -19,6 +19,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mtscout6/syntastic-local-eslint.vim'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'jszakmeister/vim-togglecursor'
+Plug '1995eaton/vim-better-javascript-completion'
+Plug 'mxw/vim-jsx'
+Plug 'w0rp/ale'
 call plug#end()
 
 " Colorz
@@ -29,7 +33,7 @@ colorscheme peachpuff
 set nocompatible
 
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
+" set clipboard=unnamed
 
 " Enhance command-line completion
 set wildmenu
@@ -87,7 +91,7 @@ set colorcolumn=100
 
 " Indents, Tabs/Spaces
 set autoindent    " If you're indented, new lines will also be indented
-set smartindent   " Automatically indents l`ines after opening a bracket in programming languages
+" set smartindent   " Automatically indents l`ines after opening a bracket in programming languages
 set expandtab     " Inserts spaces when tab is hit
 set tabstop=4     " How much space Vim gives to a tab
 set smarttab      " Improves tabbing
@@ -266,31 +270,43 @@ autocmd VimEnter,ColorScheme * :hi Directory guifg=#FF0000 ctermfg=red
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "
+" Ale - linting
+"
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️ '
+highlight ALEErrorSign cterm=NONE ctermfg=black ctermbg=yellow
+highlight clear ALEWarningSign
+let g:airline#extensions#ale#enabled = 1
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-l> <Plug>(ale_next_wrap)
+
+
+"
 " Syntastic
 "
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
-
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
-
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
-
-hi SpellBad ctermfg=black ctermbg=yellow
-hi SpellCap ctermfg=black ctermbg=yellow
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_loc_list_height = 5
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
+" let g:syntastic_javascript_checkers = ['eslint']
+"
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_style_error_symbol = '⁉️'
+" let g:syntastic_warning_symbol = '⚠️'
+" let g:syntastic_style_warning_symbol = '💩'
+"
+" highlight link SyntasticErrorSign SignColumn
+" highlight link SyntasticWarningSign SignColumn
+" highlight link SyntasticStyleErrorSign SignColumn
+" highlight link SyntasticStyleWarningSign SignColumn
+"
+" hi SpellBad ctermfg=black ctermbg=yellow
+" hi SpellCap ctermfg=black ctermbg=yellow
 
 "
 " Airline
@@ -357,7 +373,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|node_modules$'
 "enable keyboard shortcuts
 let g:tern_map_keys=1
 "show argument hints
-" let g:tern_show_argument_hints='on_hold'
+let g:tern_show_argument_hints='on_hold'
 
 "
 " YouCompleteMe
