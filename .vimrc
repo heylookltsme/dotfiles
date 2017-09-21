@@ -16,7 +16,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mtscout6/syntastic-local-eslint.vim'
+" Plug 'mtscout6/syntastic-local-eslint.vim'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jszakmeister/vim-togglecursor'
@@ -85,9 +85,10 @@ syntax on
 
 " Highlight current line
 set cursorline
+hi CursorLine cterm=NONE ctermbg=YELLOW
 
 " Highlight a certain column
-set colorcolumn=100
+set colorcolumn=80
 
 " Indents, Tabs/Spaces
 set autoindent    " If you're indented, new lines will also be indented
@@ -274,9 +275,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️ '
-highlight ALEErrorSign cterm=NONE ctermfg=black ctermbg=yellow
 highlight clear ALEWarningSign
+highlight clear ALEErrorSign
 let g:airline#extensions#ale#enabled = 1
+let g:ale_set_highlights = 0
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-l> <Plug>(ale_next_wrap)
 
