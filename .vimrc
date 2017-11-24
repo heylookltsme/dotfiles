@@ -282,6 +282,10 @@ let g:ale_set_highlights = 0
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-l> <Plug>(ale_next_wrap)
 
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+
 
 "
 " Syntastic
@@ -382,3 +386,4 @@ let g:tern_show_argument_hints='on_hold'
 "
 let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_min_num_of_chars_for_completion = 1
+"
