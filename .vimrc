@@ -1,6 +1,5 @@
 " Plug ins, managed by vim-plug
 call plug#begin()
-" Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
@@ -10,20 +9,22 @@ Plug 'airblade/vim-gitgutter'
 Plug 'valloric/youcompleteme'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'mtscout6/syntastic-local-eslint.vim'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jszakmeister/vim-togglecursor'
 Plug '1995eaton/vim-better-javascript-completion'
-Plug 'mxw/vim-jsx'
 Plug 'w0rp/ale'
 call plug#end()
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 
 " Colorz
 set background=dark
@@ -284,8 +285,18 @@ nmap <silent> <C-l> <Plug>(ale_next_wrap)
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'jsx': ['eslint'],
+\   'typescript': ['tslint', 'eslint'],
+\   'php': ['psalm', 'phpcs'],
 \}
 
+let b:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\   'jsx': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\}
+
+let g:ale_fix_on_save = 0
 
 "
 " Syntastic
@@ -385,5 +396,6 @@ let g:tern_show_argument_hints='on_hold'
 " YouCompleteMe
 "
 let g:ycm_autoclose_preview_window_after_completion = 1
+highlight YcmErrorSection ctermbg=None ctermfg=None
 "let g:ycm_min_num_of_chars_for_completion = 1
 "
