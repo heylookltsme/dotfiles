@@ -21,6 +21,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'jszakmeister/vim-togglecursor'
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'w0rp/ale'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 filetype plugin on
@@ -32,9 +34,6 @@ colorscheme peachpuff
 
 " Make Vim more useful
 set nocompatible
-
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-" set clipboard=unnamed
 
 " Enhance command-line completion
 set wildmenu
@@ -93,7 +92,7 @@ set colorcolumn=80
 
 " Indents, Tabs/Spaces
 set autoindent    " If you're indented, new lines will also be indented
-" set smartindent   " Automatically indents l`ines after opening a bracket in programming languages
+set smartindent   " Automatically indents lines after opening a bracket in programming languages
 set expandtab     " Inserts spaces when tab is hit
 set tabstop=4     " How much space Vim gives to a tab
 set smarttab      " Improves tabbing
@@ -296,34 +295,7 @@ let b:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
 \}
 
-let g:ale_fix_on_save = 0
-
-"
-" Syntastic
-"
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_loc_list_height = 5
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 1
-" let g:syntastic_javascript_checkers = ['eslint']
-"
-" let g:syntastic_error_symbol = '❌'
-" let g:syntastic_style_error_symbol = '⁉️'
-" let g:syntastic_warning_symbol = '⚠️'
-" let g:syntastic_style_warning_symbol = '💩'
-"
-" highlight link SyntasticErrorSign SignColumn
-" highlight link SyntasticWarningSign SignColumn
-" highlight link SyntasticStyleErrorSign SignColumn
-" highlight link SyntasticStyleWarningSign SignColumn
-"
-" hi SpellBad ctermfg=black ctermbg=yellow
-" hi SpellCap ctermfg=black ctermbg=yellow
+let g:ale_fix_on_save = 1
 
 "
 " Airline
@@ -399,3 +371,5 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
 "let g:ycm_min_num_of_chars_for_completion = 1
 "
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
