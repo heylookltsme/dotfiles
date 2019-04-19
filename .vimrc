@@ -1,39 +1,74 @@
 " Plug ins, managed by vim-plug
 call plug#begin()
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'valloric/youcompleteme'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'ap/vim-css-color'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'leafgarland/typescript-vim'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'jszakmeister/vim-togglecursor'
-Plug '1995eaton/vim-better-javascript-completion'
-Plug 'w0rp/ale'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'jiangmiao/auto-pairs'
+" File management
+Plug 'scrooloose/nerdtree'                           " File browser
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'       " File browser highlighting
+Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file finder
+" Plug 'vim-scripts/bufexplorer.zip'                   " Buffer browser
+Plug 'yegappan/mru'                                  " Most-recently-user files
+
+" Syntax stuff
+Plug 'ap/vim-css-color'                              " Highlight colors in style files
+Plug 'pangloss/vim-javascript'                       " Better JS syntax highlighting
+Plug 'mxw/vim-jsx'                                   " JSX syntax highlighting
+Plug 'leafgarland/typescript-vim'                    " TS syntax highlighting
+Plug 'peitalin/vim-jsx-typescript'                   " JSX syntax highlighting in TS
+Plug 'hail2u/vim-css3-syntax'                        " Better css syntax highlighting
+Plug 'cakebaker/scss-syntax.vim'                     " Sass syntax highlighing
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' } " Styled components syntax highlighting
+
+" Linting / Formatting
+Plug 'w0rp/ale'                                      " Linting
+Plug 'prettier/vim-prettier', {'do': 'yarn install'} " Auto formatting
+
+" Autocompletion
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}     " Semantic completion
+Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'} " Semantic completion for php
+Plug '1995eaton/vim-better-javascript-completion'               " I don't think I need this
+
+" Editor configuration
+Plug 'vim-airline/vim-airline'                       " Status bar
+Plug 'vim-airline/vim-airline-themes'                " Status bar themes
+Plug 'ryanoasis/vim-devicons'                        " Nerd icons for various plugins
+Plug 'airblade/vim-gitgutter'                        " Git status in the gutter
+Plug 'nathanaelkane/vim-indent-guides'               " Indentation indicators
+Plug 'editorconfig/editorconfig-vim'                 " Editor config
+Plug 'jszakmeister/vim-togglecursor'                 " Different cursors in different modes
+
+" Editing Tools
+Plug 'scrooloose/nerdcommenter'                      " Commenting tools
+Plug 'tpope/vim-fugitive'                            " Git commands
+Plug 'heavenshell/vim-jsdoc'                         " JSDoc helpers
+Plug 'alvan/vim-closetag'                            " HTML auto close tag
+Plug 'jiangmiao/auto-pairs'                          " Auto close parens, brackets
 call plug#end()
 
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
+set nocompatible
+
+" Disable visualbell
+set visualbell t_vb=
+
+" Handy dandy aliases for common typos.
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
 
 " Colorz
 set background=dark
 colorscheme peachpuff
 
-" Make Vim more useful
-set nocompatible
+" Clear previous search highlighting by hitting enter
+noremap <CR> :noh<CR><CR>
+
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
 
 " Enhance command-line completion
 set wildmenu
@@ -66,9 +101,6 @@ if exists("&undodir")
     set undodir=~/.vim/undo
 endif
 
-" Don’t create backups when editing files in certain directories
-set backupskip=/tmp/*,/private/tmp/*
-
 " Respect modeline in files
 set modeline
 set modelines=4
@@ -85,14 +117,13 @@ syntax on
 
 " Highlight current line
 set cursorline
-hi CursorLine cterm=NONE ctermbg=YELLOW
 
 " Highlight a certain column
 set colorcolumn=80
 
 " Indents, Tabs/Spaces
 set autoindent    " If you're indented, new lines will also be indented
-set smartindent   " Automatically indents lines after opening a bracket in programming languages
+"set smartindent   " Automatically indents lines after opening a bracket in programming languages
 set expandtab     " Inserts spaces when tab is hit
 set tabstop=4     " How much space Vim gives to a tab
 set smarttab      " Improves tabbing
@@ -109,11 +140,12 @@ set hlsearch
 " Ignore case of searches
 set ignorecase
 
+" Override `ignorecase` option  if the search pattern contains
+" uppercase characters.
+set smartcase
+
 " Highlight dynamically as pattern is typed
 set incsearch
-
-" Clear previous search highlighting by hitting enter
-nnoremap <CR> :noh<CR><CR>
 
 " Always show status line
 set laststatus=2
@@ -151,21 +183,11 @@ set title
 " Show the (partial) command as it’s being typed
 set showcmd
 
-" Use relative line numbers
-" if exists("&relativenumber")
-"     set relativenumber
-"     au BufReadPost * set relativenumber
-" endif
-
-" Start scrolling three lines before the horizontal window border
+" Start scrolling five lines before the horizontal window border
 set scrolloff=5
 
 " Set the spellchecking language.
 set spelllang=en_us
-
-" Override `ignorecase` option  if the search pattern contains
-" uppercase characters.
-set smartcase
 
 " Allow cursor to be anywhere.
 set virtualedit=all
@@ -184,7 +206,7 @@ noremap <leader>ss :call StripWhitespace()<CR>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " Strip whitespace on write for certain files
-autocmd BufWritePre *.php,*.js,*.scss,*.css,*.tpl,*.html :%s/\s\+$//e
+autocmd BufWritePre *.php,*.js,*.scss,*.css,*.tpl,*.html,*.jsx,*.ts,.*tsx :%s/\s\+$//e
 
 " Automatic commands
 if has("autocmd")
@@ -203,21 +225,46 @@ highlight Comment ctermfg=Gray
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
 hi Visual cterm=NONE ctermfg=black ctermbg=yellow
 
- " ----------------------------------------------------------------------
+"
+" Buffer management
+"
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <S-n> :enew<cr>
+
+" Move to the next buffer
+nmap <S-Right> :bnext<CR>
+
+" Move to the previous buffer
+nmap <S-Left> :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <S-q> :bp <BAR> bd #<CR>
+
+" Split
+noremap <C-h> :<C-u>split<CR>
+noremap <C-v> :<C-u>vsplit<CR>
+
+" MRU
+map <S-f> :MRU<CR>
+
+" ----------------------------------------------------------------------
 " | Helper Functions                                                   |
 " ----------------------------------------------------------------------
 
 function! GetGitBranchName()
-
     let branchName = ""
-
     if exists("g:loaded_fugitive")
         let branchName = "[" . fugitive#head() . "]"
     endif
-
     return branchName
-
 endfunction
+
 
 " ----------------------------------------------------------------------
 " | Status Line                                                        |
@@ -262,13 +309,30 @@ highlight User1
 "
 " NERDTree
 "
-autocmd VimEnter * wincmd p    " Have cursor start in file window
-map <C-n> :NERDTreeToggle<CR>  " Map toggle to crtl-n
-let NERDTreeShowHidden=1       " Show hidden files
-" Better color for directories
-autocmd VimEnter,ColorScheme * :hi Directory guifg=#FF0000 ctermfg=red
+" Have cursor start in file window
+autocmd VimEnter * wincmd p
+
+" Map toggle to ctrl-n
+noremap <silent> <C-n> :NERDTreeToggle<CR>
+
+" Show hidden files
+let NERDTreeShowHidden=1
+
 " Close vim if nerdtree is the only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Put it on the right
+let g:NERDTreeWinPos = "right"
+
+" Some highlight stuff
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+let g:NERDTreeHighlightFolders = 1
+let g:NERDTreeHighlightFoldersFullName = 1
+
+" Better color for directories
+autocmd VimEnter,ColorScheme * :hi Directory ctermfg=gray
 
 "
 " Ale - linting
@@ -285,8 +349,8 @@ nmap <silent> <C-l> <Plug>(ale_next_wrap)
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'jsx': ['eslint'],
-\   'typescript': ['tslint', 'eslint'],
-\   'php': ['psalm', 'phpcs'],
+\   'typescript': ['tslint'],
+\   'php': ['psalm'],
 \}
 
 let b:ale_fixers = {
@@ -300,12 +364,20 @@ let g:ale_fix_on_save = 1
 "
 " Airline
 "
-let g:airline_theme='bubblegum'
+let g:airline_theme = 'bubblegum'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline#extensions#hunks#enabled=0
+
+" Ale errors
+let g:airline#extensions#ale#enabled = 1
+
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 "
 " NERDCommenter
@@ -322,6 +394,7 @@ let g:NERDCommentEmptyLines = 1
 "
 " JSDoc
 "
+let g:javascript_plugin_jsdoc = 1
 let g:jsdoc_param_description_separator = ' - '
 let g:jsdoc_underscore_private = 1
 let g:jsdoc_allow_input_prompt = 1
@@ -341,35 +414,26 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=233 " #121212
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
 
 "
-" Rainbow
-"
-let g:rainbow_active = 1
-
-"
-" vim-javascript
-"
-let g:javascript_plugin_jsdoc = 1
-
-"
 " CtrlP
 "
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|node_modules$'
-
-"
-" Tern
-"
-"enable keyboard shortcuts
-let g:tern_map_keys=1
-"show argument hints
-let g:tern_show_argument_hints='on_hold'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|vendor|dist)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_working_path_mode = 'rc'
+let g:ctrlp_max_files = 0
+let g:ctrlp_open_new_file = 'v'
+let g:ctrlp_clear_cache_on_exit = 0
 
 "
 " YouCompleteMe
 "
 let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
-"let g:ycm_min_num_of_chars_for_completion = 1
+map <C-\> :YcmCompleter GoTo<CR>
+set splitbelow
+
 "
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_log_level = 'debug'
+" Git gutter colors
+"
+highlight GitGutterAdd ctermfg=2
+highlight GitGutterChange ctermfg=3
+highlight GitGutterDelete ctermfg=1
