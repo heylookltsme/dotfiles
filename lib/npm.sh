@@ -11,6 +11,8 @@ run_npm() {
         # List of npm packages
         local packages="\
                 yarn \
+                typescript \
+                prettier \
                 nodemon \
                 eslint \
                 eslint-plugin-react \
