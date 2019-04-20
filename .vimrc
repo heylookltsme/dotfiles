@@ -74,7 +74,11 @@ cnoreabbrev Qall qall
 
 " Colorz
 set background=dark
-colorscheme peachpuff
+" gruvbox settings need to come before colorscheme line
+let g:gruvbox_italic = 1
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_sign_column = 'bg0'
+colorscheme gruvbox
 
 " Clear previous search highlighting by hitting enter
 noremap <CR> :noh<CR><CR>
@@ -230,13 +234,6 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
-" Better comment color
-highlight Comment ctermfg=Gray
-
-" Better search and selection highlighting
-hi Search cterm=NONE ctermfg=black ctermbg=yellow
-hi Visual cterm=NONE ctermfg=black ctermbg=yellow
-
 "
 " Buffer management
 "
@@ -276,43 +273,6 @@ function! GetGitBranchName()
     endif
     return branchName
 endfunction
-
-
-" ----------------------------------------------------------------------
-" | Status Line                                                        |
-" ----------------------------------------------------------------------
-
-" Terminal types:
-"
-"   1) term  (normal terminals, e.g.: vt100, xterm)
-"   2) cterm (color terminals, e.g.: MS-DOS console, color-xterm)
-"   3) gui   (GUIs)
-
-highlight ColorColumn
-    \ term=NONE
-    \ cterm=NONE  ctermbg=237    ctermfg=NONE
-    \ gui=NONE    guibg=#073642  guifg=NONE
-
-highlight CursorLine
-    \ term=NONE
-    \ cterm=NONE  ctermbg=235  ctermfg=NONE
-    \ gui=NONE    guibg=#073642  guifg=NONE
-
-highlight CursorLineNr
-    \ term=bold
-    \ cterm=bold  ctermbg=NONE   ctermfg=178
-    \ gui=bold    guibg=#073642  guifg=Orange
-
-highlight LineNr
-    \ term=NONE
-    \ cterm=NONE  ctermfg=241    ctermbg=NONE
-    \ gui=NONE    guifg=#839497  guibg=#073642
-
-highlight User1
-    \ term=NONE
-    \ cterm=NONE  ctermbg=237    ctermfg=Grey
-    \ gui=NONE    guibg=#073642  guifg=#839496
-
 
 " ----------------------------------------------------------------------
 " | Plugins                                                             |
@@ -376,7 +336,7 @@ let g:ale_fix_on_save = 1
 "
 " Airline
 "
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'gruvbox'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -442,10 +402,3 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
 map <C-\> :YcmCompleter GoTo<CR>
 set splitbelow
-
-"
-" Git gutter colors
-"
-highlight GitGutterAdd ctermfg=2
-highlight GitGutterChange ctermfg=3
-highlight GitGutterDelete ctermfg=1
