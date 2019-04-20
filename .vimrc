@@ -156,8 +156,7 @@ set hlsearch
 " Ignore case of searches
 set ignorecase
 
-" Override `ignorecase` option  if the search pattern contains
-" uppercase characters.
+" Override `ignorecase` option  if the search pattern contains uppercase characters.
 set smartcase
 
 " Highlight dynamically as pattern is typed
@@ -284,6 +283,10 @@ endfunction
 " Have cursor start in file window
 autocmd VimEnter * wincmd p
 
+" Open if starting vim with no file
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree |  endif
+
 " Map toggle to ctrl-n
 noremap <silent> <C-n> :NERDTreeToggle<CR>
 
@@ -303,8 +306,16 @@ let g:NERDTreePatternMatchHighlightFullName = 1
 let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 
-" Better color for directories
-autocmd VimEnter,ColorScheme * :hi Directory ctermfg=gray
+" No help message
+let g:NERDTreeMinimalUI = 1
+
+" Needed to show folder icons
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+" More fun arrows
+let NERDTreeNodeDelimiter = "\x07"
+let NERDTreeDirArrowExpandable = "\uf061"
+let NERDTreeDirArrowCollapsible = "\uf063"
 
 "
 " Ale - linting
@@ -350,6 +361,13 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline_left_sep = "\uE0B0"
+let g:airline_right_sep = " \uE0B2"
+
+" Straight tabs, no arrows.
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "
 " NERDCommenter
