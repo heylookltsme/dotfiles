@@ -74,11 +74,7 @@ cnoreabbrev Qall qall
 
 " Colorz
 set background=dark
-" gruvbox settings need to come before colorscheme line
-let g:gruvbox_italic = 1
-let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_sign_column = 'bg0'
-colorscheme gruvbox
+colorscheme peachpuff
 
 " Clear previous search highlighting by hitting enter
 noremap <CR> :noh<CR><CR>
@@ -156,7 +152,8 @@ set hlsearch
 " Ignore case of searches
 set ignorecase
 
-" Override `ignorecase` option  if the search pattern contains uppercase characters.
+" Override `ignorecase` option  if the search pattern contains
+" uppercase characters.
 set smartcase
 
 " Highlight dynamically as pattern is typed
@@ -233,6 +230,13 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
+" Better comment color
+highlight Comment ctermfg=Gray
+
+" Better search and selection highlighting
+highlight Search cterm=NONE ctermfg=black ctermbg=yellow
+highlight Visual cterm=NONE ctermfg=black ctermbg=yellow
+
 "
 " Buffer management
 "
@@ -272,6 +276,43 @@ function! GetGitBranchName()
     endif
     return branchName
 endfunction
+
+
+" ----------------------------------------------------------------------
+" | Status Line                                                        |
+" ----------------------------------------------------------------------
+
+" Terminal types:
+"
+"   1) term  (normal terminals, e.g.: vt100, xterm)
+"   2) cterm (color terminals, e.g.: MS-DOS console, color-xterm)
+"   3) gui   (GUIs)
+
+highlight ColorColumn
+    \ term=NONE
+    \ cterm=NONE  ctermbg=237    ctermfg=NONE
+    \ gui=NONE    guibg=#073642  guifg=NONE
+
+highlight CursorLine
+    \ term=NONE
+    \ cterm=NONE  ctermbg=235  ctermfg=NONE
+    \ gui=NONE    guibg=#073642  guifg=NONE
+
+highlight CursorLineNr
+    \ term=bold
+    \ cterm=bold  ctermbg=NONE   ctermfg=178
+    \ gui=bold    guibg=#073642  guifg=Orange
+
+highlight LineNr
+    \ term=NONE
+    \ cterm=NONE  ctermfg=241    ctermbg=NONE
+    \ gui=NONE    guifg=#839497  guibg=#073642
+
+highlight User1
+    \ term=NONE
+    \ cterm=NONE  ctermbg=237    ctermfg=Grey
+    \ gui=NONE    guibg=#073642  guifg=#839496
+
 
 " ----------------------------------------------------------------------
 " | Plugins                                                             |
@@ -318,6 +359,49 @@ let NERDTreeDirArrowExpandable = "\uf061"
 let NERDTreeDirArrowCollapsible = "\uf063"
 
 "
+" NERDTree Syntax Highlight
+"
+" Better color for directories
+highlight Directory ctermfg=66
+highlight NERDTreeOpenable ctermfg=130
+
+" Fix folder icon colors - https://github.com/ryanoasis/vim-devicons/issues/250
+highlight! link NERDTreeFlags NERDTreeDir
+
+" Some color variables
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor['css'] = s:salmon
+let g:NERDTreeExtensionHighlightColor['scss'] = s:salmon
+let g:NERDTreeExtensionHighlightColor['json'] = s:pink
+let g:NERDTreeExtensionHighlightColor['js'] = s:green
+let g:NERDTreeExtensionHighlightColor['jsx'] = s:green
+let g:NERDTreeExtensionHighlightColor['ts'] = s:green
+let g:NERDTreeExtensionHighlightColor['tsx'] = s:green
+let g:NERDTreeExtensionHighlightColor['svg'] = s:aqua
+let g:NERDTreeExtensionHighlightColor['md'] = s:darkBlue
+let g:NERDTreeExtensionHighlightColor['yml'] = s:yellow
+let g:NERDTreeExtensionHighlightColor['yaml'] = s:yellow
+
+"
 " Ale - linting
 "
 let g:ale_sign_error = '❌'
@@ -333,7 +417,7 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'jsx': ['eslint'],
 \   'typescript': ['tslint'],
-\   'php': ['psalm'],
+\   'php': ['php', 'psalm'],
 \}
 
 let b:ale_fixers = {
@@ -347,7 +431,7 @@ let g:ale_fix_on_save = 1
 "
 " Airline
 "
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'bubblegum'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -420,3 +504,10 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
 map <C-\> :YcmCompleter GoTo<CR>
 set splitbelow
+
+"
+" Git gutter colors
+"
+highlight GitGutterAdd ctermfg=2
+highlight GitGutterChange ctermfg=3
+highlight GitGutterDelete ctermfg=1
