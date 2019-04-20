@@ -3,11 +3,12 @@ call plug#begin()
 " File management
 Plug 'scrooloose/nerdtree'                           " File browser
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'       " File browser highlighting
+Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git indicators in nerdtree
 Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file finder
-" Plug 'vim-scripts/bufexplorer.zip'                   " Buffer browser
 Plug 'yegappan/mru'                                  " Most-recently-user files
 
 " Syntax stuff
+Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'                              " Highlight colors in style files
 Plug 'pangloss/vim-javascript'                       " Better JS syntax highlighting
 Plug 'mxw/vim-jsx'                                   " JSX syntax highlighting
@@ -15,16 +16,24 @@ Plug 'leafgarland/typescript-vim'                    " TS syntax highlighting
 Plug 'peitalin/vim-jsx-typescript'                   " JSX syntax highlighting in TS
 Plug 'hail2u/vim-css3-syntax'                        " Better css syntax highlighting
 Plug 'cakebaker/scss-syntax.vim'                     " Sass syntax highlighing
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' } " Styled components syntax highlighting
+Plug 'styled-components/vim-styled-components', {
+    \'branch': 'main'
+\}                                                   " Styled components syntax highlighting
 
 " Linting / Formatting
 Plug 'w0rp/ale'                                      " Linting
-Plug 'prettier/vim-prettier', {'do': 'yarn install'} " Auto formatting
+Plug 'prettier/vim-prettier', {
+    \'do': 'yarn install'
+\}                                                   " Auto formatting
 
 " Autocompletion
-Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}     " Semantic completion
-Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'} " Semantic completion for php
-Plug '1995eaton/vim-better-javascript-completion'               " I don't think I need this
+Plug 'Valloric/YouCompleteMe', {
+    \'do': './install.py --all'
+\}                                                   " Semantic completion
+Plug 'lvht/phpcd.vim', {
+    \'for': 'php', 'do': 'composer install'
+\}                                                   " Semantic completion for php
+Plug '1995eaton/vim-better-javascript-completion'    " I don't think I need this
 
 " Editor configuration
 Plug 'vim-airline/vim-airline'                       " Status bar
@@ -41,6 +50,9 @@ Plug 'tpope/vim-fugitive'                            " Git commands
 Plug 'heavenshell/vim-jsdoc'                         " JSDoc helpers
 Plug 'alvan/vim-closetag'                            " HTML auto close tag
 Plug 'jiangmiao/auto-pairs'                          " Auto close parens, brackets
+
+" Vim Themes
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 set nocompatible
