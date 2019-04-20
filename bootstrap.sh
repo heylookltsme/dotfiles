@@ -24,6 +24,9 @@ function doIt() {
     # Install global node modules
     run_npm
 
+    # Fix italics
+    tic -o ~/.terminfo ./lib/xterm-256color.terminfo.txt
+
     source ~/.bash_profile;
 }
 
