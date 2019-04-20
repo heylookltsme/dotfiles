@@ -231,7 +231,7 @@ if has("autocmd")
 endif
 
 " Better comment color
-highlight Comment ctermfg=Gray
+highlight Comment ctermfg=Gray cterm=italic
 
 " Better search and selection highlighting
 highlight Search cterm=NONE ctermfg=black ctermbg=yellow
