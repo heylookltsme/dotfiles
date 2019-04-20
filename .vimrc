@@ -3,11 +3,12 @@ call plug#begin()
 " File management
 Plug 'scrooloose/nerdtree'                           " File browser
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'       " File browser highlighting
+Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git indicators in nerdtree
 Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file finder
-" Plug 'vim-scripts/bufexplorer.zip'                   " Buffer browser
 Plug 'yegappan/mru'                                  " Most-recently-user files
 
 " Syntax stuff
+Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'                              " Highlight colors in style files
 Plug 'pangloss/vim-javascript'                       " Better JS syntax highlighting
 Plug 'mxw/vim-jsx'                                   " JSX syntax highlighting
@@ -15,16 +16,24 @@ Plug 'leafgarland/typescript-vim'                    " TS syntax highlighting
 Plug 'peitalin/vim-jsx-typescript'                   " JSX syntax highlighting in TS
 Plug 'hail2u/vim-css3-syntax'                        " Better css syntax highlighting
 Plug 'cakebaker/scss-syntax.vim'                     " Sass syntax highlighing
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' } " Styled components syntax highlighting
+Plug 'styled-components/vim-styled-components', {
+    \'branch': 'main'
+\}                                                   " Styled components syntax highlighting
 
 " Linting / Formatting
 Plug 'w0rp/ale'                                      " Linting
-Plug 'prettier/vim-prettier', {'do': 'yarn install'} " Auto formatting
+Plug 'prettier/vim-prettier', {
+    \'do': 'yarn install'
+\}                                                   " Auto formatting
 
 " Autocompletion
-Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}     " Semantic completion
-Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'} " Semantic completion for php
-Plug '1995eaton/vim-better-javascript-completion'               " I don't think I need this
+Plug 'Valloric/YouCompleteMe', {
+    \'do': './install.py --all'
+\}                                                   " Semantic completion
+Plug 'lvht/phpcd.vim', {
+    \'for': 'php', 'do': 'composer install'
+\}                                                   " Semantic completion for php
+Plug '1995eaton/vim-better-javascript-completion'    " I don't think I need this
 
 " Editor configuration
 Plug 'vim-airline/vim-airline'                       " Status bar
@@ -41,6 +50,9 @@ Plug 'tpope/vim-fugitive'                            " Git commands
 Plug 'heavenshell/vim-jsdoc'                         " JSDoc helpers
 Plug 'alvan/vim-closetag'                            " HTML auto close tag
 Plug 'jiangmiao/auto-pairs'                          " Auto close parens, brackets
+
+" Vim Themes
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 set nocompatible
@@ -62,7 +74,11 @@ cnoreabbrev Qall qall
 
 " Colorz
 set background=dark
-colorscheme peachpuff
+" gruvbox settings need to come before colorscheme line
+let g:gruvbox_italic = 1
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_sign_column = 'bg0'
+colorscheme gruvbox
 
 " Clear previous search highlighting by hitting enter
 noremap <CR> :noh<CR><CR>
@@ -140,8 +156,7 @@ set hlsearch
 " Ignore case of searches
 set ignorecase
 
-" Override `ignorecase` option  if the search pattern contains
-" uppercase characters.
+" Override `ignorecase` option  if the search pattern contains uppercase characters.
 set smartcase
 
 " Highlight dynamically as pattern is typed
@@ -218,13 +233,6 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
-" Better comment color
-highlight Comment ctermfg=Gray
-
-" Better search and selection highlighting
-hi Search cterm=NONE ctermfg=black ctermbg=yellow
-hi Visual cterm=NONE ctermfg=black ctermbg=yellow
-
 "
 " Buffer management
 "
@@ -265,43 +273,6 @@ function! GetGitBranchName()
     return branchName
 endfunction
 
-
-" ----------------------------------------------------------------------
-" | Status Line                                                        |
-" ----------------------------------------------------------------------
-
-" Terminal types:
-"
-"   1) term  (normal terminals, e.g.: vt100, xterm)
-"   2) cterm (color terminals, e.g.: MS-DOS console, color-xterm)
-"   3) gui   (GUIs)
-
-highlight ColorColumn
-    \ term=NONE
-    \ cterm=NONE  ctermbg=237    ctermfg=NONE
-    \ gui=NONE    guibg=#073642  guifg=NONE
-
-highlight CursorLine
-    \ term=NONE
-    \ cterm=NONE  ctermbg=235  ctermfg=NONE
-    \ gui=NONE    guibg=#073642  guifg=NONE
-
-highlight CursorLineNr
-    \ term=bold
-    \ cterm=bold  ctermbg=NONE   ctermfg=178
-    \ gui=bold    guibg=#073642  guifg=Orange
-
-highlight LineNr
-    \ term=NONE
-    \ cterm=NONE  ctermfg=241    ctermbg=NONE
-    \ gui=NONE    guifg=#839497  guibg=#073642
-
-highlight User1
-    \ term=NONE
-    \ cterm=NONE  ctermbg=237    ctermfg=Grey
-    \ gui=NONE    guibg=#073642  guifg=#839496
-
-
 " ----------------------------------------------------------------------
 " | Plugins                                                             |
 " ----------------------------------------------------------------------
@@ -311,6 +282,10 @@ highlight User1
 "
 " Have cursor start in file window
 autocmd VimEnter * wincmd p
+
+" Open if starting vim with no file
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree |  endif
 
 " Map toggle to ctrl-n
 noremap <silent> <C-n> :NERDTreeToggle<CR>
@@ -331,8 +306,16 @@ let g:NERDTreePatternMatchHighlightFullName = 1
 let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 
-" Better color for directories
-autocmd VimEnter,ColorScheme * :hi Directory ctermfg=gray
+" No help message
+let g:NERDTreeMinimalUI = 1
+
+" Needed to show folder icons
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+" More fun arrows
+let NERDTreeNodeDelimiter = "\x07"
+let NERDTreeDirArrowExpandable = "\uf061"
+let NERDTreeDirArrowCollapsible = "\uf063"
 
 "
 " Ale - linting
@@ -364,7 +347,7 @@ let g:ale_fix_on_save = 1
 "
 " Airline
 "
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'gruvbox'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -378,6 +361,13 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline_left_sep = "\uE0B0"
+let g:airline_right_sep = " \uE0B2"
+
+" Straight tabs, no arrows.
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "
 " NERDCommenter
@@ -430,10 +420,3 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
 map <C-\> :YcmCompleter GoTo<CR>
 set splitbelow
-
-"
-" Git gutter colors
-"
-highlight GitGutterAdd ctermfg=2
-highlight GitGutterChange ctermfg=3
-highlight GitGutterDelete ctermfg=1

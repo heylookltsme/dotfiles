@@ -13,6 +13,7 @@ run_npm() {
                 yarn \
                 typescript \
                 prettier \
+                tslint \
                 nodemon \
                 eslint \
                 eslint-plugin-react \
