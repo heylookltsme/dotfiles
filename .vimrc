@@ -453,6 +453,19 @@ let g:airline_right_sep = " \uE0B2"
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
+" It's always utf-8! Who cares!!
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+" Better ale symbols
+let g:airline#extensions#ale#error_symbol = ':'
+let g:airline#extensions#ale#warning_symbol = ' :'
+
+" Remove filetype name (just symbol)
+let g:airline_section_x = ''
+
+" Fix delay after leaving insert mode
+set ttimeoutlen=50
+
 "
 " NERDCommenter
 "
@@ -504,6 +517,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
 map <C-\> :YcmCompleter GoTo<CR>
 set splitbelow
+set splitright
 
 "
 " Git gutter colors
