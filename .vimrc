@@ -1,19 +1,22 @@
 " Plug ins, managed by vim-plug
 call plug#begin()
+
 " File management
 Plug 'scrooloose/nerdtree'                           " File browser
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'       " File browser highlighting
 Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git indicators in nerdtree
 Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file finder
 Plug 'yegappan/mru'                                  " Most-recently-user files
+Plug 'tpope/vim-eunuch'                              " Sugar for common commands
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'                              " Project search
 
 " Syntax stuff
 Plug 'luochen1990/rainbow'
 Plug 'ap/vim-css-color'                              " Highlight colors in style files
 Plug 'pangloss/vim-javascript'                       " Better JS syntax highlighting
-Plug 'mxw/vim-jsx'                                   " JSX syntax highlighting
+Plug 'maxmellon/vim-jsx-pretty'                      " JSX syntax highlighting
 Plug 'leafgarland/typescript-vim'                    " TS syntax highlighting
-Plug 'peitalin/vim-jsx-typescript'                   " JSX syntax highlighting in TS
 Plug 'hail2u/vim-css3-syntax'                        " Better css syntax highlighting
 Plug 'cakebaker/scss-syntax.vim'                     " Sass syntax highlighing
 Plug 'styled-components/vim-styled-components', {
@@ -22,9 +25,6 @@ Plug 'styled-components/vim-styled-components', {
 
 " Linting / Formatting
 Plug 'w0rp/ale'                                      " Linting
-Plug 'prettier/vim-prettier', {
-    \'do': 'yarn install'
-\}                                                   " Auto formatting
 
 " Autocompletion
 Plug 'Valloric/YouCompleteMe', {
@@ -33,7 +33,6 @@ Plug 'Valloric/YouCompleteMe', {
 Plug 'lvht/phpcd.vim', {
     \'for': 'php', 'do': 'composer install'
 \}                                                   " Semantic completion for php
-Plug '1995eaton/vim-better-javascript-completion'    " I don't think I need this
 
 " Editor configuration
 Plug 'vim-airline/vim-airline'                       " Status bar
@@ -41,15 +40,17 @@ Plug 'vim-airline/vim-airline-themes'                " Status bar themes
 Plug 'ryanoasis/vim-devicons'                        " Nerd icons for various plugins
 Plug 'airblade/vim-gitgutter'                        " Git status in the gutter
 Plug 'nathanaelkane/vim-indent-guides'               " Indentation indicators
-Plug 'editorconfig/editorconfig-vim'                 " Editor config
 Plug 'jszakmeister/vim-togglecursor'                 " Different cursors in different modes
+Plug 'tpope/vim-sleuth'                              " Detect spacing
 
 " Editing Tools
 Plug 'scrooloose/nerdcommenter'                      " Commenting tools
 Plug 'tpope/vim-fugitive'                            " Git commands
 Plug 'heavenshell/vim-jsdoc'                         " JSDoc helpers
 Plug 'alvan/vim-closetag'                            " HTML auto close tag
-Plug 'jiangmiao/auto-pairs'                          " Auto close parens, brackets
+
+" Debugging tools
+Plug 'vim-vdebug/vdebug'                             " php xdebug client
 
 call plug#end()
 
@@ -124,6 +125,10 @@ set number
 
 " Enable syntax highlighting
 syntax on
+
+" Fix syntax highlighting in massive files -
+" https://github.com/vim/vim/issues/2790#issuecomment-400547834
+set redrawtime=10000
 
 " Highlight current line
 set cursorline
@@ -228,6 +233,8 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
+set omnifunc=syntaxcomplete#Complete
+
 " Better comment color
 highlight Comment ctermfg=Gray cterm=italic
 
@@ -247,10 +254,10 @@ set hidden
 nmap <S-n> :enew<cr>
 
 " Move to the next buffer
-nmap <S-Right> :bnext<CR>
+noremap <S-Right> :bnext<CR>
 
 " Move to the previous buffer
-nmap <S-Left> :bprevious<CR>
+noremap <S-Left> :bprevious<CR>
 
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
@@ -415,20 +422,27 @@ let g:ale_set_highlights = 0
 nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>l <Plug>(ale_next_wrap)
 
+" javascript files are being mistaken for typescript for some reason
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+    au BufNewFile,BufRead *.js set filetype=javascript.js
+augroup END
+
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'jsx': ['eslint'],
-\   'typescript': ['tslint'],
-\   'php': ['php', 'psalm'],
+\   'jsx': [],
+\   'typescript': ['tsserver', 'eslint'],
+\   'php': ['psalm', 'php'],
 \}
 
 let b:ale_fixers = {
-\   'javascript': ['prettier', 'eslint'],
-\   'jsx': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
+\   'tsx': ['prettier', 'eslint'],
 \}
 
 let g:ale_fix_on_save = 1
+let g:ale_lint_delay = 500
 
 "
 " Airline
@@ -525,3 +539,36 @@ map <C-\> :YcmCompleter GoTo<CR>
 highlight GitGutterAdd ctermfg=2
 highlight GitGutterChange ctermfg=3
 highlight GitGutterDelete ctermfg=1
+"
+" Vdebug Options
+"
+let g:vdebug_options = {
+\    'port' : 9000,
+\    'timeout' : 20,
+\    'server' : '127.0.0.1',
+\    'on_close' : 'stop',
+\    'break_on_open' : 0,
+\    'ide_key' : '',
+\    'debug_window_level' : 0,
+\    'debug_file_level' : 0,
+\    'debug_file' : '',
+\    'path_maps' : {
+\       '/home/vimeo/phpsrc/' : '/Users/hoenerc/projects/vimeo/',
+\    },
+\    'watch_window_style' : 'expanded',
+\    'marker_default' : '⬦',
+\    'marker_closed_tree' : '▸',
+\    'marker_open_tree' : '▾',
+\    'sign_breakpoint' : '▷',
+\    'sign_current' : '▶',
+\    'continuous_mode'  : 1
+\}
+
+"
+" Folding
+"
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+" let g:php_folding=1
