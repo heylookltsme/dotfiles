@@ -51,8 +51,6 @@ Plug 'heavenshell/vim-jsdoc'                         " JSDoc helpers
 Plug 'alvan/vim-closetag'                            " HTML auto close tag
 Plug 'jiangmiao/auto-pairs'                          " Auto close parens, brackets
 
-" Vim Themes
-Plug 'morhetz/gruvbox'
 call plug#end()
 
 set nocompatible
@@ -259,8 +257,12 @@ nmap <S-Left> :bprevious<CR>
 nmap <S-q> :bp <BAR> bd #<CR>
 
 " Split
-noremap <C-h> :<C-u>split<CR>
-noremap <C-v> :<C-u>vsplit<CR>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+set splitbelow
+set splitright
 
 " MRU
 map <S-f> :MRU<CR>
@@ -410,8 +412,8 @@ highlight clear ALEWarningSign
 highlight clear ALEErrorSign
 let g:airline#extensions#ale#enabled = 1
 let g:ale_set_highlights = 0
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-l> <Plug>(ale_next_wrap)
+nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>l <Plug>(ale_next_wrap)
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -487,7 +489,7 @@ let g:jsdoc_underscore_private = 1
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_tags = {} | let g:jsdoc_tags['object'] = 'Object'
-nmap <silent> <C-j> ?function<cr>:noh<cr><Plug>(jsdoc)
+nmap <silent> <Leader>j ?function<cr>:noh<cr><Plug>(jsdoc)
 
 "
 " Indent Guides
@@ -516,8 +518,6 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 highlight YcmErrorSection ctermbg=None ctermfg=None
 map <C-\> :YcmCompleter GoTo<CR>
-set splitbelow
-set splitright
 
 "
 " Git gutter colors
