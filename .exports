@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+# ZSH
+export ZSH="/Users/corinne/.oh-my-zsh"
 
 # Make vim the default editor.
 export EDITOR='vim';
