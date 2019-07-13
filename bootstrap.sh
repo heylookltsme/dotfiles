@@ -27,6 +27,8 @@ function doIt() {
     # Fix italics
     tic -o ~/.terminfo ./lib/xterm-256color.terminfo.txt
 
+    # Change default shell to zsh
+    chsh -s /bin/zsh
     exec zsh
 }
 
