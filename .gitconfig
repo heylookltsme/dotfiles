@@ -194,3 +194,6 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+[user]
+	name = Corinne Hoener
+	email = corinne.hoener@gmail.com

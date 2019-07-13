@@ -27,7 +27,7 @@ function doIt() {
     # Fix italics
     tic -o ~/.terminfo ./lib/xterm-256color.terminfo.txt
 
-    source ~/.bash_profile;
+    exec zsh
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then

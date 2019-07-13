@@ -3,7 +3,6 @@
 # Gratefully lifted from https://github.com/necolas/dotfiles/blob/master/lib/npm
 
 run_npm() {
-
     # Check for npm
     if type_exists 'npm'; then
         e_header "Installing Node.js packages..."
