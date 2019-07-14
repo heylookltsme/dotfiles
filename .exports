@@ -1,5 +1,6 @@
 # ZSH
-export ZSH="/Users/corinne/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 
 # Make vim the default editor.
 export EDITOR='vim';
