@@ -7,6 +7,11 @@ Borrowing heavily from [alrra's dotfiles](https://github.com/alrra/dotfiles) for
 - Install the patched font and update iterm2 preferences
 - make sure permissions for .viminfo are correct
 
+### Installing
+Run `./diff.sh` to see what's about to change. You can also pass it a specific file - `./diff .aliases`.
+
+If all looks good, run `./bootstrap.sh` to change your life forever.
+
 ## Thanks to… (perserved from original repo)
 
 * @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
