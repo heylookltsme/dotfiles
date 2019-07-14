@@ -61,6 +61,7 @@ plugins=(
     osx                   # Some mac utils. 
     yarn                  # Yarn completion
     zsh-nvm               # Have zsh manage nvm for you
+    zsh-syntax-highlighting
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -80,8 +81,3 @@ JIRA_URL="https://vimean.atlassian.net"
 JIRA_NAME="corinne"
 JIRA_RAPID_BOARD=true
 JIRA_DEFAULT_ACTION="git"
-
-
-# Command syntax highlighting (must be at the end)
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
