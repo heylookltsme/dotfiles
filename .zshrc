@@ -25,6 +25,7 @@ unset file;
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME=powerlevel10k/powerlevel10k
+# ZSH_THEME=dracula/dracula
 
 # Automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
