@@ -7,7 +7,8 @@
 function diff_file() {
     file=$1
     local_file="$HOME/$1"
-    if [ -f "$local_file" ]; then
+
+    if [ -f "$local_file" ] || [ -r "$local_file" ]; then
         git --no-pager diff --no-index $local_file $file
         diff=$(git --no-pager diff --no-index $local_file $file)
         if [ ! -z "$diff" ]; then
@@ -21,6 +22,8 @@ if [ ! -z "$1" ]; then
 else
     dotfiles=$(\ls -d .?*)
     for file in $dotfiles; do
-        diff_file $file
+        if [ $file != ".." ]; then
+            diff_file $file
+        fi
     done;
 fi
