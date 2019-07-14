@@ -1,4 +1,27 @@
-#!/usr/bin/env bash
+# Parse options
+force=false       # -f or --force
+files_only=false  # --files-only
+
+while (( $# )); do
+  case "$1" in
+    -f|--force)
+      force=true
+      shift
+      ;;
+    --files-only)
+      files_only=true
+      shift
+      ;;
+    --) # end argument parsing
+      shift
+      break
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+  esac
+done
 
 cd "$(dirname "${BASH_SOURCE}")";
 
@@ -26,21 +49,23 @@ function doIt() {
         --exclude "LICENSE-MIT.txt" \
         -avh --no-perms . ~;
 
-    # Install vim plugins
-    vim +PlugInstall +qall!
+    if [ "$files_only" != true ]; then
+        # Install vim plugins
+        vim +PlugInstall +qall!
 
-    # Install global node modules
-    run_npm
+        # Install global node modules
+        run_npm
 
-    # Fix italics
-    tic -o ~/.terminfo ./lib/xterm-256color.terminfo.txt
+        # Fix italics
+        tic -o ~/.terminfo ./lib/xterm-256color.terminfo.txt
 
-    # Change default shell to zsh
-    chsh -s /bin/zsh
-    exec zsh
+        # Change default shell to zsh
+        chsh -s /bin/zsh
+        exec zsh
+    fi
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
+if [ "$force" == true ]; then
     doIt;
 else
     read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
