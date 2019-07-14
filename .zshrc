@@ -70,6 +70,8 @@ source $ZSH/oh-my-zsh.sh
 # Theme Settings                                                              #
 ###############################################################################
 source $ZSH_CUSTOM/config/purepower.zsh
+local_settings="$HOME/.zsh-theme-local.zsh"
+[ -r "$local_settings" ] && [ -f "$local_settings" ] && source "$local_settings"
 
 
 ###############################################################################
