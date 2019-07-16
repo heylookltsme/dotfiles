@@ -194,9 +194,8 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
-[user]
-	name = Corinne Hoener
-	email = corinne.hoener@gmail.com
-	signingkey = 1FE5FA833D140933
 [gpg]
 	program = gpg
+
+[include]
+	path = "~/.gitconfig-local"
