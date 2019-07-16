@@ -572,3 +572,8 @@ set foldnestmax=10
 set nofoldenable
 set foldlevel=2
 " let g:php_folding=1
+
+"
+" Toggle cursor
+"
+let g:togglecursor_leave = 'block'

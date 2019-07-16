@@ -1,7 +1,7 @@
 ###############################################################################
 # Load dotfiles                                                               #
 ###############################################################################
-dotfiles=( 
+dotfiles=(
     "path"        # $PATH configuration
     "exports"     # Export environment variables
     "aliases"     # So many aliases
@@ -43,24 +43,40 @@ ENABLE_CORRECTION="true"
 zstyle ':completion:::::' completer _complete _approximate
 zstyle ':completion:*:approximate:*' max-errors 2
 
+autoload -Uz history-search-end
+
+# Fix up arrow completion with vi-mode enabled
+# https://superuser.com/a/1371822
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey -M vicmd '^[[A' history-beginning-search-backward-end \
+                 '^[OA' history-beginning-search-backward-end \
+                 '^[[B' history-beginning-search-forward-end \
+                 '^[OB' history-beginning-search-forward-end
+bindkey -M viins '^[[A' history-beginning-search-backward-end \
+                 '^[OA' history-beginning-search-backward-end \
+                 '^[[B' history-beginning-search-forward-end \
+                 '^[OB' history-beginning-search-forward-end
+
 
 ###############################################################################
 # Plugins                                                                     #
 ###############################################################################
 
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Custom plugins may be added to ~/.oh-my-zsh-custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    colored-man-pages     # Colors in man pages  
+    colored-man-pages     # Colors in man pages
     composer              # Composer completion
     fancy-ctrl-z          # Use ctrl-z to go _back_ to a suspended vim
     git                   # Git aliases
     gitfast               # Git completion
-    jira                  # Commands to open jira links 
-    osx                   # Some mac utils. 
+    jira                  # Commands to open jira links
+    osx                   # Some mac utils.
     yarn                  # Yarn completion
+    vi-mode               # vim in the command line
     zsh-nvm               # Have zsh manage nvm for you
     zsh-syntax-highlighting
 )
