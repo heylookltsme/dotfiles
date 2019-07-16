@@ -80,6 +80,7 @@ bindkey "^Z" Resume
 plugins=(
     colored-man-pages     # Colors in man pages
     composer              # Composer completion
+    emojis                # ¯\_(ツ)_/¯
     git                   # Git aliases
     gitfast               # Git completion
     jira                  # Commands to open jira links
