@@ -86,6 +86,7 @@ plugins=(
     jira                  # Commands to open jira links
     osx                   # Some mac utils.
     yarn                  # Yarn completion
+    you-should-use
     vi-mode               # vim in the command line
     zsh-nvm               # Have zsh manage nvm for you
     zsh-syntax-highlighting
