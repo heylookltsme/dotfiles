@@ -58,6 +58,16 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
                  '^[[B' history-beginning-search-forward-end \
                  '^[OB' history-beginning-search-forward-end
 
+# Allow Ctrl-z to toggle between suspend and resume
+function Resume {
+    fg
+    zle push-input
+    BUFFER=""
+    zle accept-line
+}
+zle -N Resume
+bindkey "^Z" Resume
+
 
 ###############################################################################
 # Plugins                                                                     #
@@ -70,7 +80,6 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
 plugins=(
     colored-man-pages     # Colors in man pages
     composer              # Composer completion
-    fancy-ctrl-z          # Use ctrl-z to go _back_ to a suspended vim
     git                   # Git aliases
     gitfast               # Git completion
     jira                  # Commands to open jira links
