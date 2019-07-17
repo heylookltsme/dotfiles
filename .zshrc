@@ -112,3 +112,7 @@ JIRA_NAME="corinne"
 JIRA_RAPID_BOARD=true
 JIRA_DEFAULT_ACTION="git"
 JIRA_BRANCH_REGEX="s/(.+\-|^)([A-Z0-9]+-[0-9]+)(\-.+|$)/\2/p"
+
+# you-should-use
+export YSU_HARDCORE=1
+export YSU_MODE=ALL

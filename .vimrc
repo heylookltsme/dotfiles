@@ -576,4 +576,4 @@ set foldlevel=2
 "
 " Toggle cursor
 "
-let g:togglecursor_leave = 'block'
+let g:togglecursor_leave = 'line'
