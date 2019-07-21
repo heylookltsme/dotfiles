@@ -46,6 +46,9 @@ function doIt() {
         -avh --no-perms . ~;
 
     if [ "$files_only" != true ]; then
+        # Install zplugin
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
+
         # Install vim plugins
         vim +PlugInstall +qall!
 
