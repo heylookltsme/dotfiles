@@ -2,14 +2,11 @@
 call plug#begin()
 
 " File management
-Plug 'scrooloose/nerdtree'                           " File browser
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'       " File browser highlighting
-Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git indicators in nerdtree
-Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file finder
 Plug 'yegappan/mru'                                  " Most-recently-user files
 Plug 'tpope/vim-eunuch'                              " Sugar for common commands
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'                              " Project search
+Plug 'tpope/vim-vinegar'                             " Some niceties for netrw
 
 " Syntax stuff
 Plug 'luochen1990/rainbow'
@@ -71,6 +68,9 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
+" Enable syntax highlighting
+syntax on
+
 " Colorz
 set background=dark
 colorscheme peachpuff
@@ -83,6 +83,9 @@ set clipboard=unnamed
 
 " Enhance command-line completion
 set wildmenu
+
+" Enable :find to search recursively
+set path+=**
 
 " Allow cursor keys in insert mode
 set esckeys
@@ -122,9 +125,6 @@ set secure
 
 " Enable line numbers
 set number
-
-" Enable syntax highlighting
-syntax on
 
 " Fix syntax highlighting in massive files -
 " https://github.com/vim/vim/issues/2790#issuecomment-400547834
@@ -207,6 +207,9 @@ set spelllang=en_us
 " Allow cursor to be anywhere.
 set virtualedit=all
 
+" Command to generate tags file
+command! MakeTags !ctags -R .
+
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
     let save_cursor = getpos(".")
@@ -223,15 +226,14 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Strip whitespace on write for certain files
 autocmd BufWritePre *.php,*.js,*.scss,*.css,*.tpl,*.html,*.jsx,*.ts,.*tsx :%s/\s\+$//e
 
-" Automatic commands
-if has("autocmd")
-    " Enable file type detection
-    filetype plugin indent on
-    " Treat .json files as .js
-    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-    " Treat .md files as Markdown
-    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
+" Enable file type detection
+filetype plugin indent on
+
+" Treat .json files as .js
+autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+
+" Treat .md files as Markdown
+autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 
 set omnifunc=syntaxcomplete#Complete
 
@@ -241,6 +243,61 @@ highlight Comment ctermfg=Gray cterm=italic
 " Better search and selection highlighting
 highlight Search cterm=NONE ctermfg=black ctermbg=yellow
 highlight Visual cterm=NONE ctermfg=black ctermbg=yellow
+
+"
+" File browsing - netrw
+"
+let g:netrw_altv=1           " open splits to the right
+let g:netrw_liststyle=3      " tree view
+let g:netrw_special_syntax=1 " syntax highlighting for more filetypes
+let g:netrw_sizestyle="h"    " human-readable filesize
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+" Custom colors for filetypes. The syntax groups are defined in the
+" setup_netrw function below.
+highlight netrwDir   ctermfg=033
+highlight netrwDir   ctermfg=033
+highlight netrwCss   ctermfg=013
+highlight netrwScss  ctermfg=013
+highlight netrwJs    ctermfg=011
+highlight netrwJsx   ctermfg=011
+highlight netrwTs    ctermfg=014
+highlight netrwTsx   ctermfg=014
+highlight netrwJson  ctermfg=015
+highlight netrwSvg   ctermfg=015
+highlight netrwMd    ctermfg=009
+highlight netrwYml   ctermfg=209
+highlight netrwYaml  ctermfg=209
+highlight netrwPhp   ctermfg=005
+
+" Automatically deletes hidden netrw buffers ❤️
+autocmd FileType netrw setl bufhidden=delete
+autocmd FileType netrw setl bufhidden=wipe
+
+" Custom syntax highlighting. Must execute _after_ a netrw buffer is opened.
+autocmd FileType netrw call s:setup_netrw()
+
+" Custom filetype regexes for custom syntax highlighting.
+function! s:setup_netrw() abort
+    syntax match netrwJs    "\S\+\.js$"
+    syntax match netrwJsx   "\S\+\.jsx$"
+    syntax match netrwTs    "\S\+\.ts$"
+    syntax match netrwTsx   "\S\+\.tsx$"
+    syntax match netrwCss   "\S\+\.css$"
+    syntax match netrwScss  "\S\+\.scss$"
+    syntax match netrwJson  "\S\+\.json$"
+    syntax match netrwSvg   "\S\+\.svg$"
+    syntax match netrwMd    "\S\+\.md$"
+    syntax match netrwYml   "\S\+\.yml$"
+    syntax match netrwYaml  "\S\+\.yaml$"
+    syntax match netrwPhp   "\S\+\.php$"
+endfunction
+
+
+" Snippets
+" nnoremap ,html :-1read $HOME/.vim/.skeleton.html<CR>3jwf>a
+
 
 "
 " Buffer management
@@ -273,6 +330,9 @@ set splitright
 
 " MRU
 map <S-f> :MRU<CR>
+
+" Fuzzy file finder
+nmap <Leader>f :GFiles<CR>
 
 " ----------------------------------------------------------------------
 " | Helper Functions                                                   |
@@ -326,89 +386,6 @@ highlight User1
 " ----------------------------------------------------------------------
 " | Plugins                                                             |
 " ----------------------------------------------------------------------
-
-"
-" NERDTree
-"
-" Have cursor start in file window
-autocmd VimEnter * wincmd p
-
-" Open if starting vim with no file
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree |  endif
-
-" Map toggle to ctrl-n
-noremap <silent> <C-n> :NERDTreeToggle<CR>
-
-" Show hidden files
-let NERDTreeShowHidden=1
-
-" Close vim if nerdtree is the only window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Put it on the right
-let g:NERDTreeWinPos = "right"
-
-" Some highlight stuff
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1
-let g:NERDTreeHighlightFoldersFullName = 1
-
-" No help message
-let g:NERDTreeMinimalUI = 1
-
-" Needed to show folder icons
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-
-" More fun arrows
-let NERDTreeNodeDelimiter = "\x07"
-let NERDTreeDirArrowExpandable = "\uf061"
-let NERDTreeDirArrowCollapsible = "\uf063"
-
-"
-" NERDTree Syntax Highlight
-"
-" Better color for directories
-highlight Directory ctermfg=66
-highlight NERDTreeOpenable ctermfg=130
-
-" Fix folder icon colors - https://github.com/ryanoasis/vim-devicons/issues/250
-highlight! link NERDTreeFlags NERDTreeDir
-
-" Some color variables
-let s:brown = "905532"
-let s:aqua =  "3AFFDB"
-let s:blue = "689FB6"
-let s:darkBlue = "44788E"
-let s:purple = "834F79"
-let s:lightPurple = "834F79"
-let s:red = "AE403F"
-let s:beige = "F5C06F"
-let s:yellow = "F09F17"
-let s:orange = "D4843E"
-let s:darkOrange = "F16529"
-let s:pink = "CB6F6F"
-let s:salmon = "EE6E73"
-let s:green = "8FAA54"
-let s:lightGreen = "31B53E"
-let s:white = "FFFFFF"
-let s:rspec_red = 'FE405F'
-let s:git_orange = 'F54D27'
-
-let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExtensionHighlightColor['css'] = s:salmon
-let g:NERDTreeExtensionHighlightColor['scss'] = s:salmon
-let g:NERDTreeExtensionHighlightColor['json'] = s:pink
-let g:NERDTreeExtensionHighlightColor['js'] = s:green
-let g:NERDTreeExtensionHighlightColor['jsx'] = s:green
-let g:NERDTreeExtensionHighlightColor['ts'] = s:green
-let g:NERDTreeExtensionHighlightColor['tsx'] = s:green
-let g:NERDTreeExtensionHighlightColor['svg'] = s:aqua
-let g:NERDTreeExtensionHighlightColor['md'] = s:darkBlue
-let g:NERDTreeExtensionHighlightColor['yml'] = s:yellow
-let g:NERDTreeExtensionHighlightColor['yaml'] = s:yellow
 
 "
 " Ale - linting
@@ -512,19 +489,9 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+let g:indent_guides_exclude_filetypes = ['help']
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=233 " #121212
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
-
-"
-" CtrlP
-"
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|vendor|dist)|(\.(swp|ico|git|svn))$'
-let g:ctrlp_working_path_mode = 'rc'
-let g:ctrlp_max_files = 0
-let g:ctrlp_open_new_file = 'v'
-let g:ctrlp_clear_cache_on_exit = 0
 
 "
 " YouCompleteMe
@@ -577,3 +544,6 @@ set foldlevel=2
 " Toggle cursor
 "
 let g:togglecursor_leave = 'line'
+
+" Enable syntax highlighting
+" syntax on
