@@ -73,20 +73,12 @@ bindkey "^Z" Resume
 # Plugins                                                                     #
 ###############################################################################
 
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh-custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# Oh My Zsh built-in plugins
 plugins=(
     colored-man-pages     # Colors in man pages
-    composer              # Composer completion
-    emojis                # ¯\_(ツ)_/¯
     git                   # Git aliases
     gitfast               # Git completion
-    jira                  # Commands to open jira links
     osx                   # Some mac utils.
-    yarn                  # Yarn completion
-    you-should-use
     vi-mode               # vim in the command line
     z
     zsh-nvm               # Have zsh manage nvm for you
@@ -94,11 +86,22 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
+# Custom plugins, managed by zplugin
+source $HOME/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+zplugin load MichaelAquilina/zsh-emojis             # $em_shrug
+zplugin load heylookltsme/jira.plugin.zsh           # JIRA commands
+zplugin load MichaelAquilina/zsh-you-should-use     # Force alias usage
+zplugin load lukechilds/zsh-nvm                     # Zsh manages nvm
+zplugin load zsh-users/zsh-syntax-highlighting      # CLI syntax highlighting
+
 
 ###############################################################################
 # Theme Settings                                                              #
 ###############################################################################
-source $ZSH_CUSTOM/config/lean.zsh
+source $HOME/.zsh-theme.zsh
 local_settings="$HOME/.zsh-theme-local.zsh"
 [ -r "$local_settings" ] && [ -f "$local_settings" ] && source "$local_settings"
 
