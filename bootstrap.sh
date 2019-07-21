@@ -36,10 +36,6 @@ function doIt() {
     # make sure we fetch all submodules
     git submodule init
     git submodule update --recursive
-    cd ./.oh-my-zsh-custom
-    git submodule init
-    git submodule update --recursive
-    cd ..
 
     rsync --exclude ".git/" \
         --exclude ".DS_Store" \
