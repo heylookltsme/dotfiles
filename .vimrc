@@ -124,7 +124,8 @@ set exrc
 set secure
 
 " Enable line numbers
-set number
+"set number
+set relativenumber
 
 " Fix syntax highlighting in massive files -
 " https://github.com/vim/vim/issues/2790#issuecomment-400547834
@@ -333,6 +334,15 @@ map <S-f> :MRU<CR>
 
 " Fuzzy file finder
 nmap <Leader>f :GFiles<CR>
+
+"
+" Handy keymappings
+"
+" Move current line down
+map - ddp
+
+" Move current line up
+map + ddkP
 
 " ----------------------------------------------------------------------
 " | Helper Functions                                                   |
