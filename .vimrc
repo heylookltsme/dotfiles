@@ -7,9 +7,11 @@ Plug 'tpope/vim-eunuch'                              " Sugar for common commands
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'                              " Project search
 Plug 'tpope/vim-vinegar'                             " Some niceties for netrw
+Plug 'ludovicchabant/vim-gutentags'                  " Tag generation
+Plug 'majutsushi/tagbar'                             " Tag browsing
 
 " Syntax stuff
-Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'                           " Colorful parens
 Plug 'ap/vim-css-color'                              " Highlight colors in style files
 Plug 'pangloss/vim-javascript'                       " Better JS syntax highlighting
 Plug 'maxmellon/vim-jsx-pretty'                      " JSX syntax highlighting
@@ -209,7 +211,7 @@ set spelllang=en_us
 set virtualedit=all
 
 " Command to generate tags file
-command! MakeTags !ctags -R .
+command! MakeTags !/usr/local/bin/ctags -R -f ~/.tags/
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -398,6 +400,16 @@ highlight User1
 " ----------------------------------------------------------------------
 
 "
+" Tagbar
+"
+nmap <F8> :TagbarToggle<CR>
+
+"
+" Gutentags, an amazinngly named ctags plugin
+"
+let g:gutentags_cache_dir = "$HOME/.tags"
+
+"
 " Ale - linting
 "
 let g:ale_sign_error = '❌'
@@ -437,7 +449,10 @@ let g:ale_lint_delay = 500
 let g:airline_theme = 'bubblegum'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+    let g:airline_symbols = {
+        \ 'dirty': '',
+        \ 'maxlinenr': '',
+    \ }
 endif
 
 " Ale errors
@@ -449,8 +464,8 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-let g:airline_left_sep = "\uE0B0"
-let g:airline_right_sep = " \uE0B2"
+" let g:airline_left_sep = "\uE0B0"
+" let g:airline_right_sep = " \uE0B2"
 
 " Straight tabs, no arrows.
 let g:airline#extensions#tabline#left_sep = ' '
