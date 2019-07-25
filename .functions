@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+ag() {
+  command ag \
+    -p "$(git rev-parse --is-inside-work-tree &>/dev/null && echo "$(git rev-parse --show-toplevel)/.gitignore")" \
+    "$@"
+}
 
 # Create a new directory and enter it
 function mkd() {
