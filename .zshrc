@@ -26,6 +26,7 @@ unset file;
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME=powerlevel10k/powerlevel10k
 # ZSH_THEME=dracula/dracula
+# ZSH_THEME="random"
 
 # Automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
@@ -101,9 +102,14 @@ zplugin load zsh-users/zsh-syntax-highlighting      # CLI syntax highlighting
 ###############################################################################
 # Theme Settings                                                              #
 ###############################################################################
+
 source $HOME/.zsh-theme.zsh
 local_settings="$HOME/.zsh-theme-local.zsh"
 [ -r "$local_settings" ] && [ -f "$local_settings" ] && source "$local_settings"
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 
 ###############################################################################

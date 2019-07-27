@@ -49,6 +49,9 @@ function doIt() {
         # Install zplugin
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
 
+        # Install base16 shell
+        git clone https://github.com/chriskempson/base16-shell.git $HOME/.config/base16-shell
+
         # Install vim plugins
         vim +PlugInstall +qall!
 
@@ -61,6 +64,9 @@ function doIt() {
         # Change default shell to zsh
         chsh -s /bin/zsh
         exec zsh
+
+        # Set base16 theme to bright
+        base16_bright
     fi
 }
 
