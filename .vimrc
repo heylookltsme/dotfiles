@@ -126,7 +126,7 @@ set exrc
 set secure
 
 " Enable line numbers
-"set number
+set number
 set relativenumber
 
 " Fix syntax highlighting in massive files -
@@ -209,9 +209,6 @@ set spelllang=en_us
 
 " Allow cursor to be anywhere.
 set virtualedit=all
-
-" Command to generate tags file
-command! MakeTags !/usr/local/bin/ctags -R -f ~/.tags/
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -335,7 +332,7 @@ set splitright
 map <S-f> :MRU<CR>
 
 " Fuzzy file finder
-nmap <Leader>f :GFiles<CR>
+nmap f :GFiles<CR>
 
 "
 " Handy keymappings
@@ -344,7 +341,7 @@ nmap <Leader>f :GFiles<CR>
 map - ddp
 
 " Move current line up
-map + ddkP
+map = ddkP
 
 " ----------------------------------------------------------------------
 " | Helper Functions                                                   |
@@ -407,7 +404,7 @@ nmap <F8> :TagbarToggle<CR>
 "
 " Gutentags, an amazinngly named ctags plugin
 "
-let g:gutentags_cache_dir = "$HOME/.tags"
+let g:gutentags_cache_dir = $HOME . "/.tags"
 
 "
 " Ale - linting
