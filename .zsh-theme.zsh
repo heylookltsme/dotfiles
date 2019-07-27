@@ -12,7 +12,7 @@ fi
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -ga POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
       # Line #1
-      time         # current time
+      # time       # current time
       context      # user@host
       dir          # current directory
       vcs
@@ -34,8 +34,8 @@ fi
       # anaconda              # conda environment (https://conda.io/)
       # pyenv                 # python environment (https://github.com/pyenv/pyenv)
       # kubecontext           # current kubernetes context (https://kubernetes.io/)
-      # context                 # user@host
-      # time                  # current time
+      # context               # user@host
+      time                    # current time
   )
 
   # No background colors.
