@@ -70,6 +70,9 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
+" Prevent quitting the last window
+cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>
+
 " Enable syntax highlighting
 syntax on
 
@@ -248,11 +251,38 @@ highlight Visual cterm=NONE ctermfg=black ctermbg=yellow
 " File browsing - netrw
 "
 let g:netrw_altv=1           " open splits to the right
+let g:netrw_browse_split=4
+let g:netrw_winsize = -30
 let g:netrw_liststyle=3      " tree view
 let g:netrw_special_syntax=1 " syntax highlighting for more filetypes
 let g:netrw_sizestyle="h"    " human-readable filesize
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+" Toggle Vexplore with F7
+function! ToggleVExplorer()
+    if exists("t:expl_buf_num")
+        let expl_win_num = bufwinnr(t:expl_buf_num)
+        let cur_win_num = winnr()
+
+        if expl_win_num != -1
+            while expl_win_num != cur_win_num
+                exec "wincmd w"
+                let cur_win_num = winnr()
+            endwhile
+
+            close
+        endif
+
+        unlet t:expl_buf_num
+    else
+         Vexplore
+         let t:expl_buf_num = bufnr("%")
+    endif
+endfunction
+
+map <silent> <F7> :call ToggleVExplorer()<CR>
+
 
 " Custom colors for filetypes. The syntax groups are defined in the
 " setup_netrw function below.
@@ -519,6 +549,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
 " YouCompleteMe
 "
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_min_num_of_chars_for_completion = 5
 highlight YcmErrorSection ctermbg=None ctermfg=None
 map <C-\> :YcmCompleter GoTo<CR>
 
