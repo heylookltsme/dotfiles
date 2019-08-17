@@ -465,6 +465,7 @@ let g:ale_linters = {
 let b:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
 \   'tsx': ['prettier', 'eslint'],
+\   'ts': ['prettier', 'eslint'],
 \}
 
 let g:ale_fix_on_save = 1

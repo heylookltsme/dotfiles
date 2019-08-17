@@ -79,7 +79,7 @@ fi
   # POWERLEVEL9K_DIR_NOT_WRITABLE_FOREGROUND defined below won't have effect.
   typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=true
   # Default current directory color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND="yellow"
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=03
   # Directory color if it isn't writable.
   typeset -g POWERLEVEL9K_DIR_NOT_WRITABLE_FOREGROUND=209
   # If set to true, embed a hyperlink into the directory. Useful for quickly
