@@ -24,8 +24,6 @@ unset file;
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME=powerlevel10k/powerlevel10k
-# ZSH_THEME=dracula/dracula
 # ZSH_THEME="random"
 
 # Automatically update without prompting.
@@ -74,34 +72,53 @@ bindkey "^Z" Resume
 # Plugins                                                                     #
 ###############################################################################
 
-# Oh My Zsh built-in plugins
-plugins=(
-    colored-man-pages     # Colors in man pages
-    git                   # Git aliases
-    gitfast               # Git completion
-    osx                   # Some mac utils.
-    vi-mode               # vim in the command line
-    z
-    zsh-nvm               # Have zsh manage nvm for you
-    zsh-syntax-highlighting
-)
-source $ZSH/oh-my-zsh.sh
-
-# Custom plugins, managed by zplugin
 source $HOME/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-zplugin load MichaelAquilina/zsh-emojis             # $em_shrug
-zplugin load heylookltsme/jira.plugin.zsh           # JIRA commands
-zplugin load MichaelAquilina/zsh-you-should-use     # Force alias usage
-zplugin load lukechilds/zsh-nvm                     # Zsh manages nvm
-zplugin load zsh-users/zsh-syntax-highlighting      # CLI syntax highlighting
+zplugin ice wait lucid
+zplugin snippet OMZ::lib/git.zsh
+
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/git/git.plugin.zsh
+
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+
+zplugin ice wait lucid svn
+zplugin snippet OMZ::plugins/gitfast
+
+zplugin ice wait lucid svn
+zplugin snippet OMZ::plugins/osx
+
+zplugin ice wait lucid svn
+zplugin snippet OMZ::plugins/z
+
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
+
+zplugin ice wait lucid
+zplugin light MichaelAquilina/zsh-emojis             # $em_shrug
+
+zplugin ice wait lucid
+zplugin light heylookltsme/jira.plugin.zsh           # JIRA commands
+
+zplugin ice wait lucid
+zplugin light MichaelAquilina/zsh-you-should-use     # Force alias usage
+
+zplugin ice wait lucid
+zplugin light lukechilds/zsh-nvm                     # Zsh manages nvm
+
+zplugin ice wait lucid
+zplugin light zsh-users/zsh-syntax-highlighting      # CLI syntax highlighting
 
 
 ###############################################################################
 # Theme Settings                                                              #
 ###############################################################################
+
+zplugin light romkatv/powerlevel10k
+POWERLEVEL10K="$HOME/.zplugin/plugins/romkatv---powerlevel10k"
 
 source $HOME/.zsh-theme.zsh
 local_settings="$HOME/.zsh-theme-local.zsh"

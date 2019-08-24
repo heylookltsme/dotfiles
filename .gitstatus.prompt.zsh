@@ -17,7 +17,7 @@
 
 # Source gitstatus.plugin.zsh from $GITSTATUS_DIR or from the same directory
 # in which the current script resides if the variable isn't set.
-GITSTATUS_DIR="$ZSH_CUSTOM/themes/powerlevel10k/gitstatus"
+GITSTATUS_DIR="$POWERLEVEL10K/gitstatus"
 source ${GITSTATUS_DIR:-${${(%):-%x}:h}}/gitstatus.plugin.zsh || return
 
 # Sets GITSTATUS_PROMPT to reflect the state of the current git repository (empty if not
