@@ -199,3 +199,11 @@
 
 [include]
 	path = "~/.gitconfig-local"
+[user]
+	signingkey = 88A121A4A1C62522
+	name = Corinne Hoener
+	email = corinne@vimeo.com
+[pager]
+	branch = false
+[rebase]
+	instructionFormat = (%an <%ae>) %s

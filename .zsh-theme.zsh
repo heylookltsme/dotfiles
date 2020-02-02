@@ -91,19 +91,19 @@ fi
   # Git status: feature:master#tag ⇣42⇡42 *42 merge ~42 +42 !42 ?42.
   # We are using parameters defined by the gitstatus plugin. See reference:
   # https://github.com/romkatv/gitstatus/blob/master/gitstatus.plugin.zsh.
-  local vcs=''
-  source $HOME/.gitstatus.prompt.zsh
-  vcs+='$GITSTATUS_PROMPT'
+  # local vcs=''
+  # source $HOME/.gitstatus.prompt.zsh
+  # vcs+='$GITSTATUS_PROMPT'
 
-  # Disable the default Git status formatting.
-  typeset -g POWERLEVEL9K_VCS_DISABLE_GITSTATUS_FORMATTING=true
-  # Install our own Git status formatter.
-  typeset -g POWERLEVEL9K_VCS_{CLEAN,UNTRACKED,MODIFIED}_CONTENT_EXPANSION=$vcs
-  # When Git status is being refreshed asynchronously, display the last known repo status in grey.
-  typeset -g POWERLEVEL9K_VCS_LOADING_CONTENT_EXPANSION=${${vcs//\%f}//\%<->F}
-  typeset -g POWERLEVEL9K_VCS_LOADING_FOREGROUND=244
-  # Enable counters for staged, unstaged, etc.
-  typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
+  # # Disable the default Git status formatting.
+  # typeset -g POWERLEVEL9K_VCS_DISABLE_GITSTATUS_FORMATTING=true
+  # # Install our own Git status formatter.
+  # typeset -g POWERLEVEL9K_VCS_{CLEAN,UNTRACKED,MODIFIED}_CONTENT_EXPANSION=$vcs
+  # # When Git status is being refreshed asynchronously, display the last known repo status in grey.
+  # typeset -g POWERLEVEL9K_VCS_LOADING_CONTENT_EXPANSION=${${vcs//\%f}//\%<->F}
+  # typeset -g POWERLEVEL9K_VCS_LOADING_FOREGROUND=244
+  # # Enable counters for staged, unstaged, etc.
+  # typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
   # These settings are used for respositories other than Git or when gitstatusd fails and
   # Powerlevel10k has to fall back to using vcs_info.

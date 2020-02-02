@@ -12,18 +12,13 @@ run_npm() {
                 yarn \
                 typescript \
                 prettier \
-                tslint \
                 nodemon \
                 eslint \
                 eslint-plugin-react \
                 eslint-plugin-jsx-a11y \
                 eslint-plugin-import \
                 eslint-config-airbnb \
-                jsdoc \
-                grunt \
-                gulp \
-                claudia \
-                lambda-local"
+                jsdoc"
 
         # Install packages globally and quietly
         npm install $packages --global --quiet

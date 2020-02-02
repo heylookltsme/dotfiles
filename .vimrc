@@ -18,13 +18,14 @@ Plug 'ludovicchabant/vim-gutentags'                  " Tag generation
 Plug 'majutsushi/tagbar'                             " Tag browsing
 
 " Syntax stuff
-Plug 'luochen1990/rainbow'                           " Colorful parens
-Plug 'ap/vim-css-color'                              " Highlight colors in style files
 Plug 'pangloss/vim-javascript'                       " Better JS syntax highlighting
 Plug 'maxmellon/vim-jsx-pretty'                      " JSX syntax highlighting
-Plug 'leafgarland/typescript-vim'                    " TS syntax highlighting
+" Plug 'leafgarland/typescript-vim'                    " TS syntax highlighting
 Plug 'hail2u/vim-css3-syntax'                        " Better css syntax highlighting
 Plug 'cakebaker/scss-syntax.vim'                     " Sass syntax highlighing
+" Plug 'sheerun/vim-polyglot'
+Plug 'luochen1990/rainbow'                           " Colorful parens
+Plug 'ap/vim-css-color'                              " Highlight colors in style files
 Plug 'styled-components/vim-styled-components', {
     \'branch': 'main'
 \}                                                   " Styled components syntax highlighting
@@ -48,15 +49,20 @@ Plug 'airblade/vim-gitgutter'                        " Git status in the gutter
 Plug 'nathanaelkane/vim-indent-guides'               " Indentation indicators
 Plug 'jszakmeister/vim-togglecursor'                 " Different cursors in different modes
 Plug 'tpope/vim-sleuth'                              " Detect spacing
+" Plug 'rstacruz/vim-closer'
 
 " Editing Tools
 Plug 'scrooloose/nerdcommenter'                      " Commenting tools
 Plug 'tpope/vim-fugitive'                            " Git commands
 Plug 'heavenshell/vim-jsdoc'                         " JSDoc helpers
 Plug 'alvan/vim-closetag'                            " HTML auto close tag
+Plug 'christoomey/vim-sort-motion'
 
 " Debugging tools
 Plug 'vim-vdebug/vdebug'                             " php xdebug client
+
+" womp
+Plug 'takac/vim-hardtime'
 
 call plug#end()
 
@@ -64,6 +70,8 @@ set nocompatible
 
 " Disable visualbell
 set visualbell t_vb=
+
+" let g:hardtime_default_on = 1
 
 " Handy dandy aliases for common typos.
 cnoreabbrev W! w!
@@ -147,7 +155,7 @@ set redrawtime=10000
 set cursorline
 
 " Highlight a certain column
-set colorcolumn=80
+set colorcolumn=81
 
 " Indents, Tabs/Spaces
 set autoindent    " If you're indented, new lines will also be indented
@@ -216,6 +224,9 @@ set scrolloff=5
 
 " Set the spellchecking language.
 set spelllang=en_us
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd FileType gitcommit setlocal spell
+set complete+=kspell
 
 " Allow cursor to be anywhere.
 set virtualedit=all
@@ -345,7 +356,7 @@ set hidden
 
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
-nmap <S-n> :enew<cr>
+" nmap <S-n> :enew<cr>
 
 " Move to the next buffer
 noremap <S-Right> :bnext<CR>
@@ -369,7 +380,16 @@ set splitright
 map <S-f> :MRU<CR>
 
 " Fuzzy file finder
-nmap f :GFiles<CR>
+nmap z :GFiles<CR>
+
+
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd FileType gitcommit setlocal spell
+set complete+=kspell
+highlight clear SpellBad
+highlight clear SpellCap
+highlight SpellBad ctermfg=red
+highlight SpellCap ctermfg=red
 
 "
 " Handy keymappings
@@ -442,6 +462,7 @@ nmap <F8> :TagbarToggle<CR>
 " Gutentags, an amazinngly named ctags plugin
 "
 let g:gutentags_cache_dir = $HOME . "/.tags"
+let g:gutentags_ctags_extra_args = ['--recurse=no']
 
 "
 " Ale - linting
@@ -460,7 +481,10 @@ augroup FiletypeGroup
     autocmd!
     au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
     au BufNewFile,BufRead *.js set filetype=javascript.js
+    au BufNewFile,BufRead *.tsx set filetype=typescript.ts
 augroup END
+
+let g:ale_php_phpcs_executable='/Users/corinne.hoener/projects/vimeo/vendor/squizlabs/php_codesniffer/bin/phpcs'
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -469,13 +493,15 @@ let g:ale_linters = {
 \   'php': ['psalm', 'php'],
 \}
 
-let b:ale_fixers = {
+let g:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
 \   'tsx': ['prettier', 'eslint'],
 \   'ts': ['prettier', 'eslint'],
+\   'php': ['php_cs_fixer'],
 \}
 
 let g:ale_fix_on_save = 1
+let g:ale_fix_on_save_ignore = ['php_cs_fixer']
 let g:ale_lint_delay = 500
 
 "
