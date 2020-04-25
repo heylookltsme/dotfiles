@@ -1,3 +1,6 @@
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
+
 ###############################################################################
 # Load dotfiles                                                               #
 ###############################################################################
@@ -20,8 +23,12 @@ unset file;
 #  zsh options                                                                #
 ###############################################################################
 
-# Many sensible defaults   
+# Many sensible defaults
 source $ZSH/oh-my-zsh.sh
+
+# Load Git completion
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+fpath=(~/.zsh $fpath)
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -89,9 +96,13 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 # Plugins                                                                     #
 ###############################################################################
 
-source $HOME/.zplugin/bin/zplugin.zsh
+source ~/.zinit/bin/zinit.zsh
+
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
 
 zplugin ice wait lucid
 zplugin snippet OMZ::lib/git.zsh
@@ -112,9 +123,6 @@ zplugin snippet OMZ::plugins/z
 
 zplugin ice wait lucid svn
 zplugin snippet OMZ::plugins/gitfast
-
-zplugin ice wait lucid
-zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
 
 zplugin ice wait lucid
 zplugin light MichaelAquilina/zsh-emojis             # $em_shrug
@@ -185,5 +193,4 @@ add-zsh-hook chpwd load-nvmrc
 
 unalias _ # remove dumb sudo alias
 
-# dex completion
-eval "$(dex completion --zsh-completion)"
+### End of Zinit's installer chunk
